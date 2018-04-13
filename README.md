@@ -1,7 +1,4 @@
 # tng-monitor-infra
-5GTANGO Service Platform Infrastructure Monitoring
-
-
 5GTango's monitoring framework collects data from Service Platform Infrastructure, VNFs hosted on VMs and containers, VIMs and ODL servers. Ceilometer exporter provides an alternative way to gather monitoring data from VMs without the use of additional software inside the VM.
 
 
