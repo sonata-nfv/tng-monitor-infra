@@ -7,7 +7,7 @@ Ceilometer Exporter user the pipeline mechanism provided by [openstack ceilomete
       +----------------+                +---------------+               +----------------+
       |                |       udp      |               |      http     |                |
       +  ceilometer    +----------------> ceilExporter  <---------------+   Prometheus   +
-      |                |                |               |				|                |
+      |                |                |               |               |                |
       +----------------+                +---------------+               +----------------+
                                      
 ```
