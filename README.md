@@ -6,7 +6,7 @@
 
 
 ## Development
-To contribute to the development of the SONATA monitoring probes you have to fork the repository, commit new code and create pull requests.
+To contribute to the development you have to fork the repository, commit new code and create pull requests.
 
 ## License
 SONATA monitoring probes are published under Apache 2.0 license. Please see the LICENSE file for more details.
