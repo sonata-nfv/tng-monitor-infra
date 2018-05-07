@@ -42,7 +42,7 @@ from Configure import Configuration
 def init():
     global exporter_port
     global udpSrv_port
-    conf = Configuration("exporter.conf")
+    conf = Configuration("/opt/Monitoring/exporter.conf")
     exporter_port = os.getenv('CEXP_PORT', conf.ConfigSectionMap("exporter")['port'])
     udpSrv_port = os.getenv('UDPSRV_PORT', conf.ConfigSectionMap("udp_server")['port'])
 
