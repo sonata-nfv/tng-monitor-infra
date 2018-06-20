@@ -1,7 +1,7 @@
 FROM python:3
 
 RUN apt-get update && apt-get -y upgrade && \
-apt-get -y install apache2 python3 default-libmysqlclient-dev python3-dev python3-setuptools nano && \ 
+apt-get -y install apache2 python3 libmysqlclient-dev python3-dev python3-setuptools nano && \ 
 mkdir -p /opt/Monitoring
 
 COPY ./ /opt/Monitoring
