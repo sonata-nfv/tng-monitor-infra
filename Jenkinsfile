@@ -10,7 +10,7 @@ pipeline {
         }
         stage('son-monitor-ceilExp') {
           steps {
-            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f ceilExporter/Dockerfile ceilExporter/'
+            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f mtrExporter/Dockerfile ceilExporter/'
           }
         }
       }
@@ -72,7 +72,29 @@ pipeline {
             sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-ceilexp:latest registry.sonata-nfv.eu:5000/son-monitor-ceilexp:int'
             sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-ceilexp:int'
           }
-        }   
+        }
+
+      }
+    }
+    stage('Deployment in integration') {
+      when {
+         branch 'master'
+      }
+      parallel {
+        stage('Deployment in integration') {
+          steps {
+            echo 'Deploying in integration...'
+          }
+        }
+        stage('Deploying') {
+          steps {
+            sh 'rm -rf tng-devops || true'
+            sh 'git clone https://github.com/sonata-nfv/tng-devops.git'
+            dir(path: 'tng-devops') {
+              sh 'ansible-playbook roles/sp.yml -i environments -e "target=int-sp"'
+            }
+          }
+        }
       }
     }
   }
