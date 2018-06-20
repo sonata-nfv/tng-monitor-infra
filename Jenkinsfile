@@ -10,7 +10,7 @@ pipeline {
         }
         stage('son-monitor-ceilExp') {
           steps {
-            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f mtrExporter/Dockerfile ceilExporter/'
+            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f mtrExporter/Dockerfile mtrExporter/'
           }
         }
       }
