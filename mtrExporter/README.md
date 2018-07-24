@@ -27,7 +27,7 @@ To contribute to the development of the 5GTango ceilometer exporter you have to 
 
 ### License
 
-This ceilExporter is published under Apache 2.0 license. Please see the LICENSE file for more details.
+Metrics Exporter is published under Apache 2.0 license. Please see the LICENSE file for more details.
 
 ### Lead Developers
 
