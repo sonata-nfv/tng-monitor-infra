@@ -23,4 +23,5 @@ The following lead developers are responsible for this repository and have admin
  * Panos Karkazis  (pkarkazis)
 
 ####  Feedback-Chanel
+
 * Please use the GitHub issues to report bugs.
