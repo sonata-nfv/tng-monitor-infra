@@ -1,5 +1,5 @@
-# tng-odl-mon 
-Tango's ODL (OpenDayLight) monitoring client is used in order to monitor SDN controllers by collecring information from ODL servers and push them to monitoring server. 
+# SDN swich monitoring 
+<p align="justify">5GTANGO/SONATA ODL (OpenDayLight) monitoring client is used in order to monitor SDN controllers by collecting information from ODL servers and push them to monitoring server. 
 The url of the pushgateway monitoring server must be set in node.conf file 
 
 Supported monitoring metrics are:
@@ -24,7 +24,7 @@ Supported monitoring metrics are:
  * python 2.7
  
 ### Development
-To contribute to the development of the SONATA monitoring probes you have to fork the repository, commit new code and create pull requests.
+To contribute to the development of the monitoring probes you have to fork the repository, commit new code and create pull requests.
 
 
 ### Installation
@@ -46,9 +46,9 @@ sudo docker run -d --name tng-odl-probe -e NODE_NAME=VNF_1 -e ODL_SRV=http://<od
 
 ## License
 
-This tng-odl-mon is published under Apache 2.0 license. Please see the LICENSE file for more details.
+This SDN monitoring probe is published under Apache 2.0 license. Please see the LICENSE file for more details.
 
-###Lead Developers
+### Lead Developers
 
 The following lead developers are responsible for this repository and have admin rights. They can, for example, merge pull requests.
 
@@ -57,5 +57,4 @@ The following lead developers are responsible for this repository and have admin
 
 ### Feedback-Chanel
 
-* You may use the mailing list sonata-dev@lists.atosresearch.eu
 * Please use the GitHub issues to report bugs.

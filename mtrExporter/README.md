@@ -1,6 +1,6 @@
 # Metrics Exporter
 
-Metrics Exporter uses the pipeline mechanism provided by [openstack ceilometer](https://docs.openstack.org/ceilometer/latest/admin/telemetry-data-pipelines.html) in order to collect monitoring data for all the VMs inside openstack NFVI and expose them to the [Prometheus.io](https://github.com/prometheus) server. The main advantage of this approach is that all VNFs that are hosted in VMs can be monitored without the need of any additional software or configuration. The supported monitoring metrics are defined in ceilometer side:
+5GTANGO/SONATA metrics exporter uses the pipeline mechanism provided by [openstack ceilometer](https://docs.openstack.org/ceilometer/latest/admin/telemetry-data-pipelines.html) in order to collect monitoring data for all the VMs inside openstack NFVI and expose them to the [Prometheus.io](https://github.com/prometheus) server. The main advantage of this approach is that all VNFs that are hosted in VMs can be monitored without the need of any additional software or configuration. The supported monitoring metrics are defined in ceilometer side:
 
 ```
 
@@ -19,7 +19,19 @@ Metrics Exporter uses the pipeline mechanism provided by [openstack ceilometer](
  * prometheus-client
  * setuptools
  
- 
+
+### Installation
+
+Build container
+```
+docker build -t son-monitor-ceilexp
+```
+
+Run monitoring probe as container
+```
+docker run -d --name son-monitor-ceilExporter -p 10000:10000/udp -p 9092:9091 son-monitor-ceilexp
+```
+
 ### Development
 
 To contribute to the development of the 5GTango ceilometer exporter you have to fork the repository, commit new code and create pull requests.
