@@ -19,7 +19,19 @@
  * prometheus-client
  * setuptools
  
- 
+
+### Installation
+
+Build container
+```
+docker build -t son-monitor-ceilexp
+```
+
+Run monitoring probe as container
+```
+docker run -d --name son-monitor-ceilExporter -p 10000:10000/udp -p 9092:9091 son-monitor-ceilexp
+```
+
 ### Development
 
 To contribute to the development of the 5GTango ceilometer exporter you have to fork the repository, commit new code and create pull requests.
