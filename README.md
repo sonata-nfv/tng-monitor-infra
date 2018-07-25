@@ -3,7 +3,9 @@
 
 
 # Infrastructure monitoring
-5GTango's monitoring framework collects data from Service Platform Infrastructure, VNFs hosted on VMs and containers, VIMs and ODL servers. Ceilometer exporter provides an alternative way to gather monitoring data from VMs without the use of additional software inside the VM.
+<p align="justify">5GTANGO/SONATA monitoring framework collects data from NFVI, VNFs hosted on VMs or containers, VIMs and ODL servers. The implemented framework provides the following tools for collecting data from NFVIs and SDN swiches. 
+	* Metric exporter provides an alternative way to gather monitoring data from VMs without the usage of additional software inside the VM.
+	* ODL exporter collect data from SDN controllers 
 
 
 ## Development

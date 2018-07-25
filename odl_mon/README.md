@@ -1,5 +1,5 @@
 # tng-odl-mon 
-Tango's ODL (OpenDayLight) monitoring client is used in order to monitor SDN controllers by collecring information from ODL servers and push them to monitoring server. 
+<p align="justify">5GTANGO/SONATA ODL (OpenDayLight) monitoring client is used in order to monitor SDN controllers by collecting information from ODL servers and push them to monitoring server. 
 The url of the pushgateway monitoring server must be set in node.conf file 
 
 Supported monitoring metrics are:
