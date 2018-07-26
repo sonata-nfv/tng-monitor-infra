@@ -1,6 +1,5 @@
-# SDN swich monitoring 
-<p align="justify">5GTANGO/SONATA ODL (OpenDayLight) monitoring client is used in order to monitor SDN controllers by collecting information from ODL servers and push them to monitoring server. 
-The url of the pushgateway monitoring server must be set in node.conf file 
+# SDN switch monitoring 
+<p align="justify">5GTANGO/SONATA ODL (OpenDayLight) monitoring client is used to collect information from ODL controllers with respect to the connected SDN switches and push data to the Prometheus server.  
 
 Supported monitoring metrics are:
  * port_state_live
@@ -52,8 +51,8 @@ This SDN monitoring probe is published under Apache 2.0 license. Please see the 
 
 The following lead developers are responsible for this repository and have admin rights. They can, for example, merge pull requests.
 
- * Panos Trakadas  (trakadasp)
  * Panos Karkazis  (pkarkazis)
+ * Panos Trakadas  (trakadasp)
 
 ### Feedback-Chanel
 

@@ -3,7 +3,7 @@
 
 
 # Infrastructure monitoring
-<p align="justify">5GTANGO/SONATA monitoring framework collects data from NFVI, VNFs hosted on VMs or containers, VIMs and ODL servers. The implemented framework provides the following tools for collecting data from NFVIs and SDN swiches. 
+<p align="justify">5GTANGO/SONATA monitoring framework collects data from NFVI, VNFs hosted on VMs or containers, VIMs and ODL servers. The implemented framework provides the following tools for collecting data from NFVIs and SDN switches. 
 
  * Metric exporter provides an alternative way to gather monitoring data from VMs without the usage of additional software inside the VM.
  * ODL exporter collects data from SDN controllers 
