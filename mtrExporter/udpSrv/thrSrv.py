@@ -38,7 +38,6 @@ from threading import Thread
 from socketserver import ThreadingMixIn
 
 
-# http://www.techbeamers.com/python-tutorial-write-multithreaded-python-server/
 class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
     collector = None
 
@@ -60,14 +59,10 @@ class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
             #print(msg['resource_id'], msg['counter_name'], msg['counter_type'], msg['counter_unit'],msg['counter_volume'], msg['timestamp'])
             # print ("received data: %s" % data)
             self.collector.update(msg)
-            print("--------------")
+            #print("--------------")
         else:
-            print("Collector Doesn't Exist")
+            self.logger.info("Collector Doesn't Exist")
 
-
-        ### assemble a response message to client
-        #response = "%s %s" % (cur_thread.name, data)
-        #socket.sendto(data.upper(), self.client_address)
 
 
 class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
@@ -81,6 +76,7 @@ class ThrSrv(object):
         HOST, PORT = ip_, int(port_)
         class ThreadedUDPRequestHandlerCeil(ThreadedUDPRequestHandler):
             collector = ceilColl_
+            logger = self.logger
 
         server = ThreadedUDPServer((HOST, PORT),
                                    ThreadedUDPRequestHandlerCeil)

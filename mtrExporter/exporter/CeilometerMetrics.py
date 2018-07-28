@@ -82,10 +82,10 @@ class CeilometerMetrics(object):
 
         if msg_['counter_name'] in self.collectors.keys():
             self.logger.info('Mt: '+ msg_['counter_name']+" value: "+str(msg_['counter_volume'])+" timestamp: "+msg_['timestamp'])
-            print('Metric Updated! (%s)' % msg_['counter_name'])
+            #print('Metric Updated! (%s)' % msg_['counter_name'])
             self.collectors[msg_['counter_name']].update(msg_)
         else:
-            print('Collector NOT found! (%s %s %s)' % (msg_['counter_name'], msg_["counter_unit"], msg_["counter_type"]))
+            self.logger.info('Collector NOT found! (%s %s %s)' % (msg_['counter_name'], msg_["counter_unit"], msg_["counter_type"]))
 
     def run_server(self, port_):
         print ("READY to START Exporter")
