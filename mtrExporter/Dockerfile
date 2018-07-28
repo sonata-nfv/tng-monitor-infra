@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.6-jessie
 
 RUN apt-get update && apt-get -y upgrade && \
 apt-get -y install apache2 python3 libmysqlclient-dev python3-dev python3-setuptools nano && \ 
