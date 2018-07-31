@@ -55,29 +55,29 @@ class Echo(DatagramProtocol):
             if self.collector:
                 self.collector.update(msg)
         except msgpack.exceptions.BufferFull:
-                    print('msgpack.exception BufferFull ')
-                    pass
-                except msgpack.exceptions.ExtraData:
-                    print('msgpack.exception ExtraData ')
-                    pass
-                except msgpack.exceptions.OutOfData:
-                    print('msgpack.exception OutOfData ')
-                    pass
-                except msgpack.exceptions.PackException:
-                    print('msgpack.exceptionPackException ')
-                    pass
-                except msgpack.exceptions.PackOverflowError:
-                    print('msgpack.exception PackOverflowError ')
-                    pass
-                except msgpack.exceptions.PackValueError:
-                    print('msgpack.exception PackValueError ')
-                    pass
-                except msgpack.exceptions.UnpackException:
-                    print('msgpack.exception UnpackException ')
-                    pass
-                except msgpack.exceptions.UnpackValueError:
-                    print('msgpack.exception UnpackValueError ')
-                    pass
+            print('msgpack.exception BufferFull ')
+            pass
+        except msgpack.exceptions.ExtraData:
+            print('msgpack.exception ExtraData ')
+            pass
+        except msgpack.exceptions.OutOfData:
+            print('msgpack.exception OutOfData ')
+            pass
+        except msgpack.exceptions.PackException:
+            print('msgpack.exceptionPackException ')
+            pass
+        except msgpack.exceptions.PackOverflowError:
+            print('msgpack.exception PackOverflowError ')
+            pass
+        except msgpack.exceptions.PackValueError:
+            print('msgpack.exception PackValueError ')
+            pass
+        except msgpack.exceptions.UnpackException:
+            print('msgpack.exception UnpackException ')
+            pass
+        except msgpack.exceptions.UnpackValueError:
+            print('msgpack.exception UnpackValueError ')
+            pass
 
 class ThrSrv(object):
 
