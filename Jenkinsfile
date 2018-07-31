@@ -39,6 +39,7 @@ pipeline {
         }
       }
     }
+    
     stage('Promoting containers to integration env') {
       parallel {
         stage('Publishing containers to int') {
