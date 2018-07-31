@@ -10,7 +10,7 @@ pipeline {
         }
         stage('son-monitor-ceilExp') {
           steps {
-            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f mtrExporter/Dockerfile mtrExporter/'
+            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v4.0 -f mtrExporter/Dockerfile mtrExporter/'
           }
         }
       }
@@ -34,7 +34,7 @@ pipeline {
         }
         stage('son-monitor-ceilExp') {
           steps {
-            sh 'docker push registry.sonata-nfv.eu:5000/son-monitor-ceilexp'
+            sh 'docker push registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v4.0'
           }
         }
       }
@@ -48,8 +48,8 @@ pipeline {
         }
         stage('son-monitor-ceilExp') {
           steps {
-            sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-ceilexp:latest registry.sonata-nfv.eu:5000/son-monitor-ceilexp:int'
-            sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-ceilexp:int'
+            sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v4.0 registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v4.0'
+            sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v4.0'
           }
         }
 
