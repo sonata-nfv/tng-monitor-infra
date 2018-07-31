@@ -37,21 +37,23 @@ from prometheus_client.core import CounterMetricFamily
 class NetworkINPCollector(object):
 
     metric_name = 'network.incoming.packets'
-    metrics = []
+    metrics = {}
 
     def collect(self):
         if len(self.metrics) > 0:
             self.c = CounterMetricFamily(self.metric_name.replace(".","_"), 'Network incoming packets counter',
                                        labels=['resource_id', 'project_id', 'user_id','counter_unit','vnic_name','mac', 'display_name'])
             for mt in self.metrics:
-                self.c.add_metric([mt['resource_id'], mt['project_id'], mt['user_id'], mt['counter_unit'], mt['resource_metadata']['vnic_name'],
-                                   mt['resource_metadata']['mac'], mt['resource_metadata']['display_name']], mt['counter_volume'])
+                self.c.add_metric([self.metrics[mt]['resource_id'],
+                                   self.metrics[mt]['project_id'],
+                                   self.metrics[mt]['user_id'],
+                                   self.metrics[mt]['counter_unit'],
+                                   self.metrics[mt]['resource_metadata']['vnic_name'],
+                                   self.metrics[mt]['resource_metadata']['mac'],
+                                   self.metrics[mt]['resource_metadata']['display_name']],
+                                  self.metrics[mt]['counter_volume'])
             yield self.c
 
     def update(self, msg):
         if msg['counter_name'] == self.metric_name:
-            for (i,mt) in enumerate(self.metrics):
-                if mt['resource_id'] == msg['resource_id']:
-                    self.metrics[i]['counter_volume'] = msg['counter_volume']
-                    return
-            self.metrics.append(msg)
+            self.metrics[msg['resource_id']] = msg

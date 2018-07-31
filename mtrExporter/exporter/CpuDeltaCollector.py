@@ -37,7 +37,7 @@ from prometheus_client.core import CounterMetricFamily
 class CpuDeltaCollector(object):
 
     metric_name = 'cpu.delta'
-    metrics = []
+    metrics = {}
 
     def collect(self):
         # yield GaugeMetricFamily('my_gauge', 'Help text', value=7)
@@ -45,14 +45,14 @@ class CpuDeltaCollector(object):
             self.c = CounterMetricFamily(self.metric_name.replace(".","_"), 'CPU delta delta nanoseconds',
                                        labels=['resource_id', 'project_id', 'user_id','counter_unit', 'display_name'])
             for mt in self.metrics:
-                self.c.add_metric([mt['resource_id'], mt['project_id'], mt['user_id'], mt['counter_unit'], mt['resource_metadata']['display_name']],
-                                  mt['counter_volume'])
+               self.c.add_metric([self.metrics[mt]['resource_id'],
+                                   self.metrics[mt]['project_id'],
+                                   self.metrics[mt]['user_id'],
+                                   self.metrics[mt]['counter_unit'],
+                                   self.metrics[mt]['resource_metadata']['display_name']],
+                                  self.metrics[mt]['counter_volume'])
             yield self.c
 
     def update(self, msg):
         if msg['counter_name'] == self.metric_name:
-            for (i,mt) in enumerate(self.metrics):
-                if mt['resource_id'] == msg['resource_id']:
-                    self.metrics[i]['counter_volume'] = msg['counter_volume']
-                    return
-            self.metrics.append(msg)
+            self.metrics_obj[msg['resource_id']] = msg

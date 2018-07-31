@@ -81,7 +81,7 @@ class CeilometerMetrics(object):
     def update(self,msg_):
 
         if msg_['counter_name'] in self.collectors.keys():
-            self.logger.info('Mt: '+ msg_['counter_name']+" value: "+str(msg_['counter_volume'])+" timestamp: "+msg_['timestamp'])
+            #self.logger.info('Mt: '+ msg_['counter_name']+" value: "+str(msg_['counter_volume'])+" timestamp: "+msg_['timestamp'])
             #print('Metric Updated! (%s)' % msg_['counter_name'])
             self.collectors[msg_['counter_name']].update(msg_)
         else:
