@@ -55,4 +55,4 @@ class CpuDeltaCollector(object):
 
     def update(self, msg):
         if msg['counter_name'] == self.metric_name:
-            self.metrics_obj[msg['resource_id']] = msg
+            self.metrics[msg['resource_id']] = msg
