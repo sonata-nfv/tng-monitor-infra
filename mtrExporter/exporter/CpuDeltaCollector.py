@@ -46,7 +46,7 @@ class CpuDeltaCollector(object):
                                        labels=['resource_id', 'project_id', 'user_id','counter_unit', 'display_name'])
             for mt in self.metrics.copy():
               ts = time.time()
-              if self.metrics_obj[mt]['last_pushed'] + 4 * self.metrics_obj[mt]['epoch'] > ts:
+              if self.metrics[mt]['last_pushed'] + 4 * self.metrics[mt]['epoch'] > ts:
                 self.c.add_metric([self.metrics[mt]['resource_id'],
                                   self.metrics[mt]['project_id'],
                                   self.metrics[mt]['user_id'],
@@ -54,17 +54,17 @@ class CpuDeltaCollector(object):
                                   self.metrics[mt]['resource_metadata']['display_name']],
                                   self.metrics[mt]['counter_volume'])
               else:
-                self.metrics_obj.pop(mt)
+                self.metrics.pop(mt)
                 continue
             yield self.c
 
     def update(self, msg):
         ts = time.time()
         if msg['counter_name'] == self.metric_name:
-            if not msg['resource_id'] in self.metrics_obj:
+            if not msg['resource_id'] in self.metrics:
                 msg['epoch'] = ts
                 msg['last_pushed'] = ts
             else:
-                msg['epoch'] = ts - self.metrics_obj[msg['resource_id']]['last_pushed']
+                msg['epoch'] = ts - self.metrics[msg['resource_id']]['last_pushed']
                 msg['last_pushed'] = ts
-            self.metrics_obj[msg['resource_id']] = msg
+            self.metrics[msg['resource_id']] = msg
