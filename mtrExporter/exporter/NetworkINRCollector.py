@@ -55,7 +55,7 @@ class NetworkINRCollector(object):
                                    self.metrics[mt]['resource_metadata']['mac'],
                                    self.metrics[mt]['resource_metadata']['display_name']],
                                   self.metrics[mt]['counter_volume'])
-            else:
+              else:
                 self.metrics_obj.pop(mt)
                 continue
             yield self.c
