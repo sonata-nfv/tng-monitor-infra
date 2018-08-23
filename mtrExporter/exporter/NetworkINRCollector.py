@@ -32,7 +32,7 @@
 # encoding: utf-8
 
 from prometheus_client.core import GaugeMetricFamily
-
+import time
 
 class NetworkINRCollector(object):
 
@@ -43,7 +43,10 @@ class NetworkINRCollector(object):
         if len(self.metrics) > 0:
             self.c = GaugeMetricFamily(self.metric_name.replace(".","_"), 'Network incoming B/s gauge',
                                        labels=['resource_id', 'project_id', 'user_id','counter_unit','vnic_name','mac', 'display_name'])
-            for mt in self.metrics:
+            
+            for mt in self.metrics.copy():
+              ts = time.time()
+              if self.metrics_obj[mt]['last_pushed'] + 4 * self.metrics_obj[mt]['epoch'] > ts:
                 self.c.add_metric([self.metrics[mt]['resource_id'],
                                    self.metrics[mt]['project_id'],
                                    self.metrics[mt]['user_id'],
@@ -52,8 +55,18 @@ class NetworkINRCollector(object):
                                    self.metrics[mt]['resource_metadata']['mac'],
                                    self.metrics[mt]['resource_metadata']['display_name']],
                                   self.metrics[mt]['counter_volume'])
+            else:
+                self.metrics_obj.pop(mt)
+                continue
             yield self.c
 
     def update(self, msg):
+        ts = time.time()
         if msg['counter_name'] == self.metric_name:
-            self.metrics[msg['resource_id']] = msg
+            if not msg['resource_id'] in self.metrics_obj:
+                msg['epoch'] = ts
+                msg['last_pushed'] = ts
+            else:
+                msg['epoch'] = ts - self.metrics_obj[msg['resource_id']]['last_pushed']
+                msg['last_pushed'] = ts
+            self.metrics_obj[msg['resource_id']] = msg
