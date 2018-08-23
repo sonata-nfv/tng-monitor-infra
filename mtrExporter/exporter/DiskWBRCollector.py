@@ -110,17 +110,3 @@ class DiskWBRCollector(object):
                 msg['epoch'] = ts - self.metrics_obj[msg['resource_id']]['last_pushed']
                 msg['last_pushed'] = ts
             self.metrics_obj[msg['resource_id']] = msg
-            self.c = GaugeMetricFamily(self.metric_name.replace(".","_"), 'Disk write requests/s gauge',
-                                       labels=['resource_id', 'project_id', 'user_id','counter_unit','display_name'])
-            for mt in self.metrics:
-                self.c.add_metric([self.metrics[mt]['resource_id'],
-                                   self.metrics[mt]['project_id'],
-                                   self.metrics[mt]['user_id'],
-                                   self.metrics[mt]['counter_unit'],
-                                   self.metrics[mt]['resource_metadata']['display_name']],
-                                  self.metrics[mt]['counter_volume'])
-            yield self.c
-
-    def update(self, msg):
-        if msg['counter_name'] == self.metric_name:
-            self.metrics[msg['resource_id']] = msg
