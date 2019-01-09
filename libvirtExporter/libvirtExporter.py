@@ -8,7 +8,7 @@ from prometheus_client import start_http_server, Gauge
 from xml.etree import ElementTree
 
 
-parser = argparse.ArgumentParser(description='libvirt_exporter scrapes domains metrics from libvirt daemon')
+parser = argparse.ArgumentParser(description='libvirtExporter scrapes domains metrics from libvirt daemon')
 parser.add_argument('-i','--scrape_interval', help='scrape interval for metrics in seconds', default= 5)
 parser.add_argument('-uri','--uniform_resource_identifier', help='Libvirt Uniform Resource Identifier', default= "qemu:///system")
 

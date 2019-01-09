@@ -3,7 +3,7 @@ LABEL maintainer="Panos Karkazis <pkarkazis@synelixis.com>"
 
 ENV INST_DIR /opt/monitoring/libvirt_exporter/
 
-RUN mkdir ${INST_DIR}
+RUN mkdir -p ${INST_DIR}
 
 RUN apt-get update && apt-get install -y libvirt-dev curl git gcc python3 \
     python3-pip && apt-get clean all
