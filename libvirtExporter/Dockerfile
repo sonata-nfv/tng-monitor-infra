@@ -12,4 +12,4 @@ ADD requirements.txt libvirtExporter.py ${INST_DIR}/
 WORKDIR ${INST_DIR}
 RUN pip3 install -r requirements.txt
 
-CMD [ "python3", "./libvirtExporter.py", "-i ", "2" ]
+CMD [ "python3", "libvirtExporter.py", "-i ", "2" ]
