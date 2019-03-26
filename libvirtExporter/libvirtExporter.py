@@ -113,16 +113,21 @@ def add_metrics(dom, header_mn, g_dict):
     labels = {'domain':dom.name(),'resource_id': uuid}
 
     if header_mn == "libvirt_cpu_stats_":
-
-        stats = dom.getCPUStats(True)
-        metric_names = stats[0].keys()
-        metrics_collection = get_metrics_collections(metric_names, labels, stats)
-        unit = "_nanosecs"
+        try:
+            stats = dom.getCPUStats(True)
+            metric_names = stats[0].keys()
+            metrics_collection = get_metrics_collections(metric_names, labels, stats)
+            unit = "_nanosecs"
+        except:
+            pass
 
     elif header_mn == "libvirt_mem_stats_":
         stats = dom.memoryStats()
-        mem_util = round(((float(stats['available'] - stats['unused'])) / float(stats['available']) * 100), 2)
-        stats['mem_util'] = mem_util
+         if ('available' in stats) and ('unused' in stats):
+            mem_util = round(((float(stats['available'] - stats['unused'])) / float(stats['available']) * 100), 2)
+            stats['mem_util'] = mem_util
+        else:
+            mem_util = float(-1.0)
         metric_names = stats.keys()
 
         metrics_collection = get_metrics_collections(metric_names, labels, stats)
@@ -220,7 +225,9 @@ def job(uri, g_dict, scheduler):
     if domains is not None:
         for dom in domains:
             #print(dom.name() + ' ' + dom.UUIDString())
-
+            if int(dom.info()[0]) != 1:
+                continue
+                
             for header_mn in headers_mn:
                 g_dict = add_metrics(dom, header_mn, g_dict)
 
