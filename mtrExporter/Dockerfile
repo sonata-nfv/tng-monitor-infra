@@ -1,5 +1,6 @@
 FROM python:3.6-jessie
 
+ADD sources.list /etc/apt/sources.list
 RUN apt-get update && apt-get -y upgrade && \
 apt-get -y install cron apache2 python3 libmysqlclient-dev python3-dev python3-setuptools nano && \ 
 mkdir -p /opt/Monitoring
