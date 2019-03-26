@@ -19,7 +19,7 @@ uri = args["uniform_resource_identifier"]
 def report_libvirt_error():
     """Call virGetLastError function to get the last error information."""
     err = libvirt.virGetLastError()
-    if if debug is None:
+    if debug is None:
         return
     print('Error code:    '+str(err[0]), file=sys.stderr)
     print('Error domain:  '+str(err[1]), file=sys.stderr)
