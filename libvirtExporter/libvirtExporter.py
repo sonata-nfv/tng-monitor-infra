@@ -1,5 +1,5 @@
 from __future__ import print_function
-import sys
+import sys, os 
 import argparse
 import libvirt
 import sched
@@ -19,6 +19,8 @@ uri = args["uniform_resource_identifier"]
 def report_libvirt_error():
     """Call virGetLastError function to get the last error information."""
     err = libvirt.virGetLastError()
+    if if debug is None:
+        return
     print('Error code:    '+str(err[0]), file=sys.stderr)
     print('Error domain:  '+str(err[1]), file=sys.stderr)
     print('Error message: '+err[2], file=sys.stderr)
@@ -111,6 +113,7 @@ def get_metrics_multidim_collections(dom, metric_names, device):
 def add_metrics(dom, header_mn, g_dict):
     uuid = dom.UUIDString()
     labels = {'domain':dom.name(),'resource_id': uuid}
+    metrics_collection = {}
 
     if header_mn == "libvirt_cpu_stats_":
         try:
@@ -123,7 +126,7 @@ def add_metrics(dom, header_mn, g_dict):
 
     elif header_mn == "libvirt_mem_stats_":
         stats = dom.memoryStats()
-         if ('available' in stats) and ('unused' in stats):
+        if ('available' in stats) and ('unused' in stats):
             mem_util = round(((float(stats['available'] - stats['unused'])) / float(stats['available']) * 100), 2)
             stats['mem_util'] = mem_util
         else:
@@ -227,7 +230,7 @@ def job(uri, g_dict, scheduler):
             #print(dom.name() + ' ' + dom.UUIDString())
             if int(dom.info()[0]) != 1:
                 continue
-                
+
             for header_mn in headers_mn:
                 g_dict = add_metrics(dom, header_mn, g_dict)
 
