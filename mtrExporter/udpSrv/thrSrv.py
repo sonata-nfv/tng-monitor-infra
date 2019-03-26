@@ -34,63 +34,69 @@
 #!/usr/bin/python
 import socket
 import socketserver, threading, msgpack
-from threading import Thread
-from socketserver import ThreadingMixIn
+from twisted.internet.protocol import DatagramProtocol
+from twisted.internet import reactor
 
 
-class ThreadedUDPRequestHandler(socketserver.BaseRequestHandler):
-    collector = None
+class Echo(DatagramProtocol):
+    def __init__(self, ceilColl_, log_):
+        self.logger = log_
+        self.collector = ceilColl_
 
-    def handle(self):
-        data = self.request[0].strip()
-        ### get port number
-        port = self.client_address[1]
-        ### get the communicate socket
-        socket = self.request[1]
-        ### get client host ip address
-        client_address = (self.client_address[0])
-        ### proof of multithread
-        cur_thread = threading.current_thread()
-        #print ("thread %s" % cur_thread.name)
-        #print ("received call from client:%s %s" % (client_address, port))
-        if self.collector:
-            #print("Collector Exists")
+
+    def datagramReceived(self, data, addr):
+        global pks
+        pks += 1
+        try:
             msg = msgpack.loads(data, encoding="utf-8")
+            #print('pks '+str(pks))
             #print(msg['resource_id'], msg['counter_name'], msg['counter_type'], msg['counter_unit'],msg['counter_volume'], msg['timestamp'])
-            # print ("received data: %s" % data)
-            self.collector.update(msg)
-            #print("--------------")
-        else:
-            self.logger.info("Collector Doesn't Exist")
-
-
-
-class ThreadedUDPServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
-    pass
-
+            self.transport.write(msgpack.dumps(''), addr)
+            if self.collector:
+                self.collector.update(msg)
+        except msgpack.exceptions.BufferFull:
+            print('msgpack.exception BufferFull ')
+            pass
+        except msgpack.exceptions.ExtraData:
+            print('msgpack.exception ExtraData ')
+            pass
+        except msgpack.exceptions.OutOfData:
+            print('msgpack.exception OutOfData ')
+            pass
+        except msgpack.exceptions.PackException:
+            print('msgpack.exceptionPackException ')
+            pass
+        except msgpack.exceptions.PackOverflowError:
+            print('msgpack.exception PackOverflowError ')
+            pass
+        except msgpack.exceptions.PackValueError:
+            print('msgpack.exception PackValueError ')
+            pass
+        except msgpack.exceptions.UnpackException:
+            print('msgpack.exception UnpackException ')
+            pass
+        except msgpack.exceptions.UnpackValueError:
+            print('msgpack.exception UnpackValueError ')
+            pass
 
 class ThrSrv(object):
 
     def __init__(self, ip_, port_,ceilColl_, log_):
         self.logger = log_
+        self.collector = ceilColl_
         HOST, PORT = ip_, int(port_)
-        class ThreadedUDPRequestHandlerCeil(ThreadedUDPRequestHandler):
-            collector = ceilColl_
-            logger = self.logger
-
-        server = ThreadedUDPServer((HOST, PORT),
-                                   ThreadedUDPRequestHandlerCeil)
-        ip, port = server.server_address
-        server.serve_forever()
-        # Start a thread with the server --
-        # that thread will then start one
-        # more thread for each request
-        server_thread = threading.Thread(target=server.serve_forever)
-        # Exit the server thread when the main thread terminates
-        server_thread.daemon = True
-        server_thread.start()
-        self.logger.info('UDP server started in port: ' + str(port_))
-        server.shutdown()
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setblocking(False)
+        server = (HOST, PORT)
+        sock.bind(server)
+        global pks
+        pks = 0
+        print("Listening on " + HOST + ":" + str(PORT))
+        count = 0
+        port = reactor.adoptDatagramPort(
+            sock.fileno(), socket.AF_INET, Echo(ceilColl_=self.collector,log_=self.logger))
+        sock.close()
+        reactor.run()
 
 if __name__ == "__main__":
 

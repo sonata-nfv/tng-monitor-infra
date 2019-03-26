@@ -32,27 +32,39 @@
 # encoding: utf-8
 
 from prometheus_client.core import CounterMetricFamily
-
+import time
 
 class CpuDeltaCollector(object):
 
     metric_name = 'cpu.delta'
-    metrics = []
+    metrics = {}
 
     def collect(self):
         # yield GaugeMetricFamily('my_gauge', 'Help text', value=7)
         if len(self.metrics) > 0:
             self.c = CounterMetricFamily(self.metric_name.replace(".","_"), 'CPU delta delta nanoseconds',
                                        labels=['resource_id', 'project_id', 'user_id','counter_unit', 'display_name'])
-            for mt in self.metrics:
-                self.c.add_metric([mt['resource_id'], mt['project_id'], mt['user_id'], mt['counter_unit'], mt['resource_metadata']['display_name']],
-                                  mt['counter_volume'])
+            for mt in self.metrics.copy():
+              ts = time.time()
+              if self.metrics[mt]['last_pushed'] + 4 * self.metrics[mt]['epoch'] > ts:
+                self.c.add_metric([self.metrics[mt]['resource_id'],
+                                  self.metrics[mt]['project_id'],
+                                  self.metrics[mt]['user_id'],
+                                  self.metrics[mt]['counter_unit'],
+                                  self.metrics[mt]['resource_metadata']['display_name']],
+                                  self.metrics[mt]['counter_volume'])
+              else:
+                self.metrics.pop(mt)
+                continue
             yield self.c
 
     def update(self, msg):
+        ts = time.time()
         if msg['counter_name'] == self.metric_name:
-            for (i,mt) in enumerate(self.metrics):
-                if mt['resource_id'] == msg['resource_id']:
-                    self.metrics[i]['counter_volume'] = msg['counter_volume']
-                    return
-            self.metrics.append(msg)
+            if not msg['resource_id'] in self.metrics:
+                msg['epoch'] = ts
+                msg['last_pushed'] = ts
+            else:
+                msg['epoch'] = ts - self.metrics[msg['resource_id']]['last_pushed']
+                msg['last_pushed'] = ts
+            self.metrics[msg['resource_id']] = msg
