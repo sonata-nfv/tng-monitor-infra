@@ -214,7 +214,7 @@ def add_metrics(dom, header_mn, g_dict):
 
 
 def job(uri, g_dict, scheduler):
-    domins = None
+    domains = None
     try:
         conn = connect_to_uri(uri)
         domains = get_domains(conn)
