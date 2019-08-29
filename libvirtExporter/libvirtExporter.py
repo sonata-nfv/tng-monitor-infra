@@ -14,7 +14,7 @@ parser.add_argument('-uri','--uniform_resource_identifier', help='Libvirt Unifor
 
 args = vars(parser.parse_args())
 uri = args["uniform_resource_identifier"]
-
+debug = True
 
 def report_libvirt_error():
     """Call virGetLastError function to get the last error information."""
