@@ -14,7 +14,7 @@ parser.add_argument('-uri','--uniform_resource_identifier', help='Libvirt Unifor
 
 args = vars(parser.parse_args())
 uri = args["uniform_resource_identifier"]
-
+debug = True
 
 def report_libvirt_error():
     """Call virGetLastError function to get the last error information."""
@@ -214,7 +214,7 @@ def add_metrics(dom, header_mn, g_dict):
 
 
 def job(uri, g_dict, scheduler):
-    domins = None
+    domains = None
     try:
         conn = connect_to_uri(uri)
         domains = get_domains(conn)
