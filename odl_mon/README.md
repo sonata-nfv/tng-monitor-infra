@@ -19,14 +19,7 @@ Supported monitoring metrics are:
  * port_receive_errors
 
 
-### Dependencies
- * python 2.7
- 
-### Development
-To contribute to the development of the monitoring probes you have to fork the repository, commit new code and create pull requests.
-
-
-### Installation
+### Installing / Getting started
 a. From code
 ```
 export ODL_SRV=http://<odl_server>:<port>
@@ -42,6 +35,18 @@ sudo docker build -t son-odl-probe .
 sudo docker run -d --name tng-odl-probe -e NODE_NAME=VNF_1 -e ODL_SRV=http://<odl_server>:<port> -e PROM_SRV=http://<pushgateway>:<port>/metrics -e ODL_USER=[{"user_name": <user_name>, "password":<password>}] -e export ODL_PASS=<password> tng-odl-probe
 ```
 
+## Developing
+
+### Built With
+ * python 2.7
+ 
+### Submiting changes
+
+To contribute to the development of the monitoring probes you have to fork the repository, commit new code and create pull requests.
+
+## Licensing
+
+The most up-to-date version is v5.0.
 
 ## License
 
@@ -56,4 +61,5 @@ The following lead developers are responsible for this repository and have admin
 
 ### Feedback-Chanel
 
-* Please use the GitHub issues to report bugs.
+* You may use the mailing list [sonata-dev-list](mailto:sonata-dev@lists.atosresearch.eu)
+* You may use the GitHub issues to report bugs
