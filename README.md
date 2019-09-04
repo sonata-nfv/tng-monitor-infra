@@ -10,7 +10,7 @@
  * Kubernetes configuration for the collecting monitoring metrics for containers deployed in kubernetes cluster
  * ODL exporter collects data from SDN controllers 
 
-# Installing / Getting started
+## Installing / Getting started
 See more information in each component's reademe file
 
 ## Developing

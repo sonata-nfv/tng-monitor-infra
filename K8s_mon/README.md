@@ -32,7 +32,7 @@ son-prometheus-service     NodePort    10.101.241.54   <none>        9090:30090/
 
 ```
 
-c. Configure monitoring system to collect data from the kubernetes cluster 
+d. Configure monitoring system to collect data from the kubernetes cluster 
 ```
 curl -X POST "http://<monitoring_manager_ip>:8000/api/v2/prometheus/targets" -H "accept: application/json" -H "Content-Type: application/json"  -d "{ \"targets\": [ { \"honor_labels\": true, \"job_name\": \"K8s_cluster\", \"metrics_path\": \"/federate\", \"params\": { \"match[]\": [ \"{job=\\\"kubernetes-cadvisor\\\"}\", \"{job=\\\"kubernetes-nodes\\\"}\", \"{job=\\\"kubernetes-pods\\\"}\", \"{job=\\\"pushgateway\\\"}\" ] }, \"scrape_interval\": \"10s\", \"scrape_timeout\": \"10s\", \"static_configs\": [ { \"targets\": [ \"<k8s-cluster-ip>:30090\" ] } ] }, { \"job_name\": \"prometheus\", \"static_configs\": [ { \"targets\": [ \"localhost:9090\" ] } ] }, { \"job_name\": \"pushgateway\", \"static_configs\": [ { \"targets\": [ \"localhost:9090\" ] } ] } ]}"
 
@@ -45,7 +45,7 @@ The required monitoring pods inside the kubernetes cluster are:
  * Prometheus 
  * Pushgateway 
  * Alertmanager (optional)
- 
+
  
 ### Submiting changes
 To contribute to the development of the monitoring probes you have to fork the repository, commit new code and create pull requests.
