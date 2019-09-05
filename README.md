@@ -29,4 +29,4 @@ The following lead developers are responsible for this repository and have admin
 ####  Feedback-Chanel
 
 * You may use the mailing list [sonata-dev-list](mailto:sonata-dev@lists.atosresearch.eu)
-* You may use the GitH
+* You may use the GitHub issues to report bug

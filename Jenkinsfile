@@ -13,6 +13,11 @@ pipeline {
             sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-ceilexp -f mtrExporter/Dockerfile mtrExporter/'
           }
         }
+        stage('son-monitor-libvirtExp') {
+          steps {
+            sh 'docker build -t registry.sonata-nfv.eu:5000/son-monitor-libvirtexp -f libvirtExporter/Dockerfile libvirtExporter/'
+          }
+        }
       }
     }
     stage('Unit Tests') {
@@ -53,9 +58,30 @@ pipeline {
             sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-ceilexp:int'
           }
         }
-
+        stage('son-monitor-libvirtExp') {
+          steps {
+            sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:latest registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:int'
+            sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:int'
+          }
+        }
       }
     }
+    stage('Promoting release v5.0') {
+        when {
+            branch 'v5.0'
+        }
+        stages {
+            stage('Generating release') {
+                steps {
+                    sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-ceilexp:latest registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v5.0'
+                    sh 'docker tag registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:latest registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:v5.0'
+                    sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-libvirtexp:v5.0'
+                    sh 'docker push  registry.sonata-nfv.eu:5000/son-monitor-ceilexp:v5.0'
+                }
+            }
+        }
+    }
+  
   }
   post {
     success {
