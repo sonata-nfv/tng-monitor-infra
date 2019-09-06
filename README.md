@@ -1,4 +1,4 @@
-[![Build Status](http://jenkins.sonata-nfv.eu/buildStatus/icon?job=tng-monitor-infra/master)](http://jenkins.sonata-nfv.eu/job/tng-monitor-infra/master) 
+[![Build Status](http://jenkins.sonata-nfv.eu/buildStatus/icon?job=tng-monitor-infra/master)](http://jenkins.sonata-nfv.eu/job/tng-monitor-infra/master) [![Gitter](https://badges.gitter.im/sonata-nfv/Lobby.svg)](https://gitter.im/sonata-nfv/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 <p align="center"><img src="https://github.com/sonata-nfv/son-monitor/wiki/images/sonata-5gtango-logo-500px.png" /></p>
 
 
@@ -26,7 +26,7 @@ The following lead developers are responsible for this repository and have admin
  * Panos Karkazis  (pkarkazis)
  * Panos Trakadas  (trakadasp)
 
-####  Feedback-Chanel
+####  Feedback-Channel
 
-* You may use the mailing list [sonata-dev-list](mailto:sonata-dev@lists.atosresearch.eu)
-* You may use the GitHub issues to report bug
+- You may use the mailing list [sonata-dev-list](mailto:sonata-dev@lists.atosresearch.eu)
+- Gitter room [![Gitter](https://badges.gitter.im/sonata-nfv/Lobby.svg)](https://gitter.im/sonata-nfv/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
