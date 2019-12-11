@@ -186,17 +186,22 @@ data:
 #Prometheus Server Deployment
 #############################
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    run: prometheus-server
   name: son-prometheus-deployment
   namespace: sonata
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: prometheus-server
   template:
     metadata:
       labels:
-        app: prometheus-server
+        run: prometheus-server
     spec:
       containers:
         - name: prometheus
@@ -235,7 +240,7 @@ metadata:
   
 spec:
   selector: 
-    app: prometheus-server
+    run: prometheus-server
   type: NodePort  
   ports:
     - port: 9090
@@ -250,17 +255,22 @@ spec:
 #Pushgateway Deployment
 #######################
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    run: pushgateway-server
   name: son-pushgateway-deployment
   namespace: sonata
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: pushgateway-server
   template:
     metadata:
       labels:
-        app: pushgateway-server
+        run: pushgateway-server
     spec:
       containers:
         - name: pushgateway
@@ -280,7 +290,7 @@ metadata:
   annotations:
 spec:
   selector:
-    app: pushgateway-server
+    run: pushgateway-server
   type: NodePort
   ports:
     - port: 9091
@@ -290,17 +300,22 @@ spec:
 #Alertmanager Deployment
 #########################
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    run: alertmanager-server
   name: son-alertmanager-deployment
   namespace: sonata
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: alertmanager-server
   template:
     metadata:
       labels:
-        app: alertmanager-server
+        run: alertmanager-server
     spec:
       containers:
         - name: alertmanager
@@ -320,7 +335,7 @@ metadata:
   annotations:
 spec:
   selector:
-    app: alertmanager-server
+    run: alertmanager-server
   type: NodePort
   ports:
     - port: 9093
@@ -331,17 +346,22 @@ spec:
 #kube-state-metrics Deployment
 ###############################
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    run: kube-state-metrics
   name: kube-state-metrics
   namespace: sonata
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: kube-state-metrics
   template:
     metadata:
       labels:
-        app: kube-state-metrics
+        run: kube-state-metrics
     spec:
       serviceAccountName: kube-state-metrics
       containers:
@@ -362,14 +382,14 @@ metadata:
   name: kube-state-metrics
   namespace: sonata
   labels:
-    app: kube-state-metrics
+    run: kube-state-metrics
 spec:
   ports:
   - name: kube-state-metrics
     port: 8080
     protocol: TCP
   selector:
-    app: kube-state-metrics
+    run: kube-state-metrics
 
 #############################
 #Create Grafana Config Map
@@ -406,20 +426,23 @@ metadata:
   namespace: sonata
 type: Opaque
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana-core
   namespace: sonata
   labels:
-    app: grafana
+    run: grafana
     component: core
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      run: grafana
   template:
     metadata:
       labels:
-        app: grafana
+        run: grafana
         component: core
     spec:
       containers:
@@ -477,7 +500,7 @@ metadata:
   name: grafana
   namespace: sonata
   labels:
-    app: grafana
+    run: grafana
     component: core
 spec:
   type: NodePort
@@ -486,7 +509,6 @@ spec:
       targetPort: 3000
       nodePort: 30000
   selector:
-    app: grafana
+    run: grafana
     component: core
-
-
+    
